@@ -1,0 +1,2 @@
+mobileme_username=''
+mobileme_password=''.encode('rot13')

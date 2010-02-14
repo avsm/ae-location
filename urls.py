@@ -17,7 +17,5 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns(
     '',
-    (r'^$', 'views.index'),
-    (r'^new$', 'views.new'),
-    (r'^edit/(\d+)$', 'views.edit'),
+    (r'^fmi$', 'views.fmi_cron'),
     )
