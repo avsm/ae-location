@@ -4,6 +4,9 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /tasks/.*
+  script: django_bootstrap.py
+  login: admin
 - url: .*
   script: django_bootstrap.py
   login: admin
