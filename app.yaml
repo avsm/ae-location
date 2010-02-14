@@ -6,3 +6,4 @@ api_version: 1
 handlers:
 - url: .*
   script: django_bootstrap.py
+  login: admin

@@ -38,7 +38,7 @@ def parse_poll(p):
     accuracy = float(p['accuracy'])
     latitude = float(p['latitude'])
     longitude = float(p['longitude'])
-    return { 'accuracy': accuracy, 'lat': latitude, 'long':longitude, 'date':pdate }
+    return { 'accuracy': accuracy, 'lat': latitude, 'lon':longitude, 'date':pdate }
 
 def poll():
     r = urlfetch.fetch("https://auth.me.com/authenticate", method="POST", payload=initial_payload, headers={'Content-Type': 'application/x-www-form-urlencoded'}, follow_redirects=False)

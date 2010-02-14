@@ -35,12 +35,21 @@ class Location(db.Model):
   created = db.DateTimeProperty(auto_now_add=True)
   modified = db.DateTimeProperty(auto_now=True)
 
+  def todict (self):
+    return {'lat': self.loc.lat, 'lon': self.loc.lon, 'date': self.date.isoformat() }
+    
 def fmi_cron(request):
   resp = fmi.poll()
   if resp:
-      loc = db.GeoPt(resp['lat'], resp['long'])
+      loc = db.GeoPt(resp['lat'], resp['lon'])
       l = Location(loc=loc, date=resp['date'], accuracy=resp['accuracy'], url='http://me.com')
       l.put()
       return http.HttpResponse("ok", mimetype="text/plain")
   else:
       return http.HttpResponseServerError("error", mimetype="text/plain")
+      
+def loc(request):
+  query = Location.all()
+  recent = query.fetch(10)
+  j = json.dumps(map(lambda x: x.todict(), recent))
+  return http.HttpResponse(j, mimetype="text/plain")

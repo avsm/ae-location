@@ -17,5 +17,6 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns(
     '',
-    (r'^fmi$', 'views.fmi_cron'),
+    (r'^tasks/fmi$', 'views.fmi_cron'),
+    (r'^loc$', 'views.loc'),
     )
