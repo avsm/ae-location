@@ -7,3 +7,4 @@ handlers:
 - url: .*
   script: django_bootstrap.py
   login: admin
+  secure: always
