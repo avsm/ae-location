@@ -1,2 +1,3 @@
 mobileme_username=''
-mobileme_password=''.encode('rot13')
+mobileme_password=''
+flickr_appid=''
