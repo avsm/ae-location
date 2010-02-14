@@ -3,7 +3,7 @@ import sys
 
 import cgi
 import getpass
-import json
+from django.utils import simplejson as json
 import re
 import time
 import urllib

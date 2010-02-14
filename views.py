@@ -23,7 +23,7 @@ import django
 from django import http
 from django import shortcuts
 
-import json
+from django.utils import simplejson as json
 import fmi
 
 class Location(db.Model):
