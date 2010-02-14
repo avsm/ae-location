@@ -1,0 +1,16 @@
+{%extends "base.html"%}
+{%block body%}
+<h2>All Gifts</h2>
+
+List of Gifts:
+<ul>
+{%for gift in gifts%}
+<li>
+  <a href="{%url views.edit gift.key.id%}">{{gift.name|escape}}</a>
+  - created {{gift.created|date:"Y/m/d H:i:s"}} by {{gift.giver}}
+{%endfor%}
+</ul>
+
+<a href="{%url views.new%}">Create new gift</a>
+
+{%endblock%}

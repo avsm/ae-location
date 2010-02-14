@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>{%if gift%}{{gift.subject|escape}} - {%endif%}Gift Lists</title>
+  <link type="text/css" rel="stylesheet" href="/static/styles.css">
+  <script type="text/javascript" src="/static/script.js"></script>
+</head>
+<body>
+<div>
+{%if user %}
+<b>{{user.nickname}} &lt;{{user.email}}&gt;</b>
+{%if is_admin%} | <a href="/_ah/admin">Admin</a>{%endif%}
+{%if sign_out%} | <a href="{{sign_out}}">Sign out</a>{%endif%}
+{% else %}
+{%if sign_in%}<a href="{{sign_in}}">Sign in</a>{%endif%}
+{%endif%}
+</div>
+
+{%block body%}{%endblock%}
+
+</body>
+</html>

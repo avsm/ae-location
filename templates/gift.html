@@ -1,0 +1,12 @@
+{%extends "base.html"%}
+{%block body%}
+<h2>Create or Edit Gift</h2>
+
+<form action="{%url views.edit gift.key.id%}" method="post">
+<table>
+{{form}}
+<tr><td><input type="submit" value="Create or Edit Gift"></td></tr>
+</table>
+</form>
+
+{%endblock%}
