@@ -33,6 +33,7 @@ class Location(db.Model):
   accuracy = db.FloatProperty()
   woeid = db.StringProperty()
   url = db.URLProperty()
+  speed = db.FloatProperty()
 
   created = db.DateTimeProperty(auto_now_add=True)
   modified = db.DateTimeProperty(auto_now=True)
@@ -50,7 +51,15 @@ def fmi_cron(request):
       return http.HttpResponse("ok", mimetype="text/plain")
   else:
       return http.HttpResponseServerError("error", mimetype="text/plain")
-      
+
+def android_update(request):
+  resp = json.loads(request.raw_post_data)
+  loc = db.GeoPt(resp['lat'], resp['lon'])
+  wid = woeid.resolve_latlon(loc.lat, loc.lon)
+  l = Location(loc=loc, date=resp['date'], accuracy=resp['accuracy'], url='http://google.com/android', woeid=wid)
+  l.put()
+  return http.HttpResponse(request.raw_post_data, mimetype="text/plain")
+
 def loc(request):
   query = Location.all()
   recent = query.order('-date').fetch(10)

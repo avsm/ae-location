@@ -7,6 +7,9 @@ handlers:
 - url: /tasks/.*
   script: django_bootstrap.py
   login: admin
+- url: /update/.*
+  script: django_bootstrap.py
+  secure: always
 - url: .*
   script: django_bootstrap.py
   login: admin

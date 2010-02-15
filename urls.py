@@ -18,5 +18,6 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns(
     '',
     (r'^tasks/fmi$', 'views.fmi_cron'),
+    (r'^update/android$', 'views.android_update'),
     (r'^loc$', 'views.loc'),
     )
