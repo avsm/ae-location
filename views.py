@@ -38,7 +38,7 @@ class Location(db.Model):
   modified = db.DateTimeProperty(auto_now=True)
 
   def todict (self):
-    return { 'lat': self.loc.lat, 'lon': self.loc.lon, 'date': self.date.isoformat() }
+    return { 'lat': self.loc.lat, 'lon': self.loc.lon, 'date': self.date.isoformat(), 'woeid': self.woeid }
    
 def fmi_cron(request):
   resp = fmi.poll()
@@ -53,7 +53,7 @@ def fmi_cron(request):
       
 def loc(request):
   query = Location.all()
-  recent = query.fetch(10)
-  j = json.dumps(map(lambda x: x.todict(), recent))
+  recent = query.order('-date').fetch(10)
+  j = json.dumps(map(lambda x: x.todict(), recent), indent=2)
   return http.HttpResponse(j, mimetype="text/plain")
 
