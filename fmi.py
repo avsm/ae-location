@@ -28,13 +28,9 @@ def parse_poll(p):
 	# statusString            locate status available
 	# time                    8:17 AM
 	
-	# need to regexp since datetime doesnt like AM or the full month word
-    hr,mn,am = re.search('(\d+):(\d+) (\w\w)', p['time']).groups()
-    if am.lower() != 'am':
-      hr = str(int(hr) + 12)
     month,day,year = re.search('(\w+) (\d+), (\d+)', p['date']).groups()
     month = month[0:3].lower()
-    pdate = datetime.strptime("%s %s %s %s:%s" % (month, day, year,hr,mn), "%b %d %Y %H:%M")
+    pdate = datetime.strptime("%s %s %s %s" % (month, day, year, p['time']), "%b %d %Y %I:%M %p")
     accuracy = float(p['accuracy'])
     latitude = float(p['latitude'])
     longitude = float(p['longitude'])
