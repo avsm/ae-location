@@ -24,6 +24,8 @@ from django import http
 from django import shortcuts
 
 from django.utils import simplejson as json
+from datetime import datetime
+import time
 import fmi
 import woeid
 
@@ -39,14 +41,18 @@ class Location(db.Model):
   modified = db.DateTimeProperty(auto_now=True)
 
   def todict (self):
-    return { 'lat': self.loc.lat, 'lon': self.loc.lon, 'date': self.date.isoformat(), 'woeid': self.woeid }
+    return { 'lat': self.loc.lat, 'lon': self.loc.lon, 'date': time.mktime(self.date.timetuple()), 'woeid': self.woeid }
    
 def fmi_cron(request):
   resp = fmi.poll()
   if resp:
       loc = db.GeoPt(resp['lat'], resp['lon'])
       wid = woeid.resolve_latlon(loc.lat, loc.lon)
-      l = Location(loc=loc, date=resp['date'], accuracy=resp['accuracy'], url='http://me.com', woeid=wid)
+      acc = resp.get('accuracy', None)
+      if acc:
+         acc = float(acc)
+      ctime = datetime.fromtimestamp(float(resp['date']))
+      l = Location(loc=loc, date=ctime, accuracy=acc, url='http://me.com', woeid=wid)
       l.put()
       return http.HttpResponse("ok", mimetype="text/plain")
   else:
@@ -56,7 +62,11 @@ def android_update(request):
   resp = json.loads(request.raw_post_data)
   loc = db.GeoPt(resp['lat'], resp['lon'])
   wid = woeid.resolve_latlon(loc.lat, loc.lon)
-  l = Location(loc=loc, date=resp['date'], accuracy=resp['accuracy'], url='http://google.com/android', woeid=wid)
+  acc = resp.get('accuracy', None)
+  if acc:
+    acc = float(acc)
+  ctime = datetime.fromtimestamp(float(resp['date']))
+  l = Location(loc=loc, date=ctime, accuracy=acc, url='http://google.com/android', woeid=wid)
   l.put()
   return http.HttpResponse(request.raw_post_data, mimetype="text/plain")
 

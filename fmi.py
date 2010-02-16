@@ -31,10 +31,11 @@ def parse_poll(p):
     month,day,year = re.search('(\w+) (\d+), (\d+)', p['date']).groups()
     month = month[0:3].lower()
     pdate = datetime.strptime("%s %s %s %s" % (month, day, year, p['time']), "%b %d %Y %I:%M %p")
+    ctime = time.mktime(pdate.timetuple())
     accuracy = float(p['accuracy'])
     latitude = float(p['latitude'])
     longitude = float(p['longitude'])
-    return { 'accuracy': accuracy, 'lat': latitude, 'lon':longitude, 'date':pdate }
+    return { 'accuracy': accuracy, 'lat': latitude, 'lon':longitude, 'date': ctime }
 
 def poll():
     r = urlfetch.fetch("https://auth.me.com/authenticate", method="POST", payload=initial_payload, headers={'Content-Type': 'application/x-www-form-urlencoded'}, follow_redirects=False)
