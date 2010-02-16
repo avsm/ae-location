@@ -1,18 +1,13 @@
-A personal location tracker which runs under Google AppEngine and
-keeps track of you (and only you) from various sources.
+Android client app for the personal location tracker running on 
+Google AppEngine, keeping track of your location.
 
-To install it, just copy 'passwd.py.in' to 'passwd.py' with your
-credentials, and deploy the whole lot to AppEngine.
+Compile the application using Eclipse, and either install it directly
+on the phone (for ADP phones) or make an APK and install that.
+Note that currently LocationTrackerService.java needs to be modified
+with Google credentials and correct appengine paths (this will be
+sorted out and moved to the GUI soon).
 
-Portions of the findmyiphone web scraper are originally from:
-http://code.google.com/p/findmyiphone/
-and covered by the Apache 2 license.
-
-In order to use the Flickr API to provide WOEIDs, a Flickr API key is 
-required (http://www.flickr.com/services/apps/create/) and needs to be 
-added to passwd.py.
-
-The rest is GPLv2 licensed:
+This software is GPLv2 licensed:
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,4 +25,4 @@ The rest is GPLv2 licensed:
 
 
 --
-Anil Madhavapeddy <anil@recoil.org>
+Malte Schwarzkopf <ms705@cam.ac.uk>
