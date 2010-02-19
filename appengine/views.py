@@ -76,3 +76,6 @@ def loc(request):
   j = json.dumps(map(lambda x: x.todict(), recent), indent=2)
   return http.HttpResponse(j, mimetype="text/plain")
 
+def index(request):
+  return shortcuts.render_to_response("map.html", {})
+  
