@@ -4,12 +4,18 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /static
+  static_dir: static
+
 - url: /tasks/.*
   script: django_bootstrap.py
   login: admin
+
 - url: /update/.*
   script: django_bootstrap.py
   secure: always
+  login: admin
+
 - url: .*
   script: django_bootstrap.py
   login: admin
