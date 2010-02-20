@@ -25,8 +25,9 @@ from django import shortcuts
 
 from django.utils import simplejson as json
 from datetime import datetime
-import time
+import time, string
 import fmi
+import passwd
 import woeid
 
 class Location(db.Model):
@@ -77,5 +78,11 @@ def loc(request):
   return http.HttpResponse(j, mimetype="text/plain")
 
 def index(request):
-  return shortcuts.render_to_response("map.html", {})
-  
+  query = Location.all()
+  points = query.order('-date').fetch(1000)
+  # center on the most recent result
+  centerx = points[0].loc.lat
+  centery = points[0].loc.lon
+  points_js = string.join(map(lambda x: "new GLatLng(%f,%f)" % (x.loc.lat,x.loc.lon), points), ', ')
+  p = { 'google_maps_appid': passwd.google_maps_appid, 'centerx':centerx, 'centery':centery, 'points': points_js }
+  return shortcuts.render_to_response("map.html", p)
